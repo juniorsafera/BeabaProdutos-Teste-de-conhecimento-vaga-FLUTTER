@@ -19,21 +19,19 @@ class FormCadastro extends StatefulWidget {
 
 final _form = GlobalKey<FormState>();
 
-  DateTime? _dataSelecionada ;
+DateTime? _dataSelecionada;
 final TextEditingController cNome = TextEditingController();
 final TextEditingController cCargo = TextEditingController();
 final TextEditingController cSetor = TextEditingController();
- 
-
- 
 
 final funcionario = ModelFuncionario(
-    id: Random.secure().toString(),
-    nome: cNome.text,
-    cargo: cCargo.text,
-    setor: cSetor.text,
-    dataNascimento: _dataSelecionada!,
-    dataContratacao: DateTime.now());
+  id: Random.secure().toString(),
+  nome: cNome.text,
+  cargo: cCargo.text,
+  setor: cSetor.text,
+  dataNascimento: _dataSelecionada!,
+  dataContratacao: DateTime.now(),
+);
 
 class _FormCadastroState extends State<FormCadastro> {
   @override
@@ -52,7 +50,6 @@ class _FormCadastroState extends State<FormCadastro> {
         }
         setState(() {
           _dataSelecionada = value;
-          
         });
       });
     }
@@ -188,8 +185,8 @@ class _FormCadastroState extends State<FormCadastro> {
                     ),
                     RaisedButton(
                       onPressed: () {
-                          providerFuncionarios.put(funcionario);
-                          Navigator.pop(context);
+                        providerFuncionarios.put(funcionario);
+                        Navigator.pop(context);
                       },
                       child: Text('Cadastrar'),
                     ),
