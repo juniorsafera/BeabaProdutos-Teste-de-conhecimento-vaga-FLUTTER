@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 
 class FuncionariosProvider with ChangeNotifier {
   final Map<String, ModelFuncionario> _funcionarios = {...listaFuncionarios};
+  
 
   List<ModelFuncionario> get funcionariosCadastrados =>
       [..._funcionarios.values];
@@ -57,5 +58,20 @@ class FuncionariosProvider with ChangeNotifier {
       _funcionarios.remove(funcionario.id);
       notifyListeners();
     }
+  }
+
+  void alterar(ModelFuncionario funcionario) {
+    // map1.update('key3', (value) => 'Transparent');
+    _funcionarios.update(
+      funcionario.id,
+      (_) => ModelFuncionario(
+          id: funcionario.id,
+          nome: funcionario.nome,
+          cargo: funcionario.cargo,
+          setor: funcionario.setor,
+          dataNascimento: funcionario.dataNascimento,
+          dataContratacao: funcionario.dataContratacao),
+    );
+    notifyListeners();
   }
 }
