@@ -45,7 +45,7 @@ class ListaFuncionarios extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => FormFuncionario(
-                                    funcionario: _funcionario,
+                                    funcionario: funcionarios[index],
                                   )),
                         );
                       },
