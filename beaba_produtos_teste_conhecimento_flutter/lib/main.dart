@@ -10,15 +10,15 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (_) => FuncionariosProvider(),
-      child: MaterialApp(
+      child:const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: ViewPrincipal(),
-        localizationsDelegates: const [
+        localizationsDelegates:   [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [Locale('pt')],
+        supportedLocales:   [Locale('pt')],
       ),
     ),
   );
