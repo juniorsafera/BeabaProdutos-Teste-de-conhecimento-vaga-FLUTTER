@@ -9,8 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class FormCadastro extends StatefulWidget {
-  final ModelFuncionario funcionario;
-  const FormCadastro({Key? key, required this.funcionario}) : super(key: key);
+  const FormCadastro({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<FormCadastro> createState() => _FormCadastroState();
@@ -18,19 +19,13 @@ class FormCadastro extends StatefulWidget {
 
 final _form = GlobalKey<FormState>();
 
-DateTime? _dataSelecionada;
+  DateTime? _dataSelecionada ;
 final TextEditingController cNome = TextEditingController();
 final TextEditingController cCargo = TextEditingController();
 final TextEditingController cSetor = TextEditingController();
+ 
 
-final Map<String, String> _dadosForm = {};
-
-void _carregarDados(ModelFuncionario funcionario) {
-  _dadosForm['id'] = funcionario.id;
-  _dadosForm['nome'] = funcionario.nome;
-  _dadosForm['cargo'] = funcionario.cargo;
-  _dadosForm['setor'] = funcionario.setor;
-}
+ 
 
 final funcionario = ModelFuncionario(
     id: Random.secure().toString(),
@@ -44,9 +39,6 @@ class _FormCadastroState extends State<FormCadastro> {
   @override
   Widget build(BuildContext context) {
     final providerFuncionarios = Provider.of<FuncionariosProvider>(context);
-    final _funcionario =
-        ModalRoute.of(context)!.settings.arguments as ModelFuncionario;
-    _carregarDados(_funcionario);
 
     _abrirCalendario() {
       showDatePicker(
@@ -60,6 +52,7 @@ class _FormCadastroState extends State<FormCadastro> {
         }
         setState(() {
           _dataSelecionada = value;
+          
         });
       });
     }
@@ -122,15 +115,6 @@ class _FormCadastroState extends State<FormCadastro> {
           builder: (BuildContext context) => AlertDialog(
             title: const Text('Atenção'),
             content: const Text('Informe a data de Nascimento!'),
-            actions: <Widget>[
-              // ignore: deprecated_member_use
-              FlatButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
           ),
         );
       } else {
@@ -142,14 +126,6 @@ class _FormCadastroState extends State<FormCadastro> {
       appBar: AppBar(
         title: Text('Funcionário'),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                _form.currentState!.save();
-                Navigator.of(context).pop();
-              },
-              icon: Icon(Icons.save))
-        ],
       ),
       body: Container(
         // ignore: prefer_const_literals_to_create_immutables
@@ -211,8 +187,11 @@ class _FormCadastroState extends State<FormCadastro> {
                       width: 10,
                     ),
                     RaisedButton(
-                      onPressed: () {},
-                      child: Text('Salvar'),
+                      onPressed: () {
+                          providerFuncionarios.put(funcionario);
+                          Navigator.pop(context);
+                      },
+                      child: Text('Cadastrar'),
                     ),
                   ],
                 ),
