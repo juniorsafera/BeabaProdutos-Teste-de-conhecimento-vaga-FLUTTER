@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:beaba_produtos_teste_conhecimento_flutter/model/modelFuncionario.dart';
+import 'package:beaba_produtos_teste_conhecimento_flutter/provider/provider_funcionarios.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class FormFuncionario extends StatefulWidget {
   final ModelFuncionario funcionario;
@@ -13,10 +17,20 @@ class FormFuncionario extends StatefulWidget {
 
 DateTime? _dataSelecionada;
 bool _demotido = true;
+String? id;
 
 final TextEditingController cNome = TextEditingController();
 final TextEditingController cCargo = TextEditingController();
 final TextEditingController cSetor = TextEditingController();
+
+final funcionario = ModelFuncionario(
+  id: id!,
+  nome: cNome.text,
+  cargo: cCargo.text,
+  setor: cSetor.text,
+  dataNascimento: _dataSelecionada!,
+  dataContratacao: DateTime.now(),
+);
 
 class _FormFuncionarioState extends State<FormFuncionario> {
   @override
@@ -25,10 +39,15 @@ class _FormFuncionarioState extends State<FormFuncionario> {
     super.initState();
     _demotido = widget.funcionario.demitido;
     _dataSelecionada = widget.funcionario.dataNascimento;
+    id = widget.funcionario.id;
+    cNome.text = widget.funcionario.nome;
+    cCargo.text = widget.funcionario.cargo;
+    cSetor.text = widget.funcionario.setor;
   }
 
   @override
   Widget build(BuildContext context) {
+    final providerFuncionarios = Provider.of<FuncionariosProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.funcionario.nome),
@@ -105,7 +124,9 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                       width: 10,
                     ),
                     RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        providerFuncionarios.put(funcionario);
+                      },
                       child: const Text('Salvar'),
                     ),
                   ],
