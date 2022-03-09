@@ -1,8 +1,10 @@
 import 'package:beaba_produtos_teste_conhecimento_flutter/components/form_cadastro.dart';
+import 'package:beaba_produtos_teste_conhecimento_flutter/components/form_funcionario.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/model/modelFuncionario.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/provider/provider_funcionarios.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/routes/rotas.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ListaFuncionarios extends StatelessWidget {
@@ -26,6 +28,7 @@ class ListaFuncionarios extends StatelessWidget {
                   Text('Contratado: ${_funcionario.dataContratacao}'),
                   Text('Cargo: ${_funcionario.cargo}'),
                   Text('Setor: ${_funcionario.setor}'),
+                  Text('Nascimento: ${DateFormat('dd/MM/y').format(_funcionario.dataNascimento)}'),
                   _funcionario.dataDemissao == null
                       ? const Text('')
                       : Text('Demitido: ${_funcionario.dataDemissao}'),
@@ -41,7 +44,7 @@ class ListaFuncionarios extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FormCadastro(
+                              builder: (context) => FormFuncionario(
                                     funcionario: _funcionario,
                                   )),
                         );
