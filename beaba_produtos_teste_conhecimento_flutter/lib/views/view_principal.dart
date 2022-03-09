@@ -31,7 +31,13 @@ class _ViewPrincipalState extends State<ViewPrincipal> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(Rotas.formCadastro);
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FormCadastro(
+                                    
+                                  )),
+                        );
                 },
                 icon: const Icon(Icons.add))
           ],
