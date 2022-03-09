@@ -23,14 +23,7 @@ final TextEditingController cNome = TextEditingController();
 final TextEditingController cCargo = TextEditingController();
 final TextEditingController cSetor = TextEditingController();
 
-final funcionario = ModelFuncionario(
-  id: id!,
-  nome: cNome.text,
-  cargo: cCargo.text,
-  setor: cSetor.text,
-  dataNascimento: _dataSelecionada!,
-  dataContratacao: DateTime.now(),
-);
+  ModelFuncionario? funcionario = null ;
 
 class _FormFuncionarioState extends State<FormFuncionario> {
   @override
@@ -43,6 +36,14 @@ class _FormFuncionarioState extends State<FormFuncionario> {
     cNome.text = widget.funcionario.nome;
     cCargo.text = widget.funcionario.cargo;
     cSetor.text = widget.funcionario.setor;
+    funcionario = ModelFuncionario(
+  id: id!,
+  nome: cNome.text,
+  cargo: cCargo.text,
+  setor: cSetor.text,
+  dataNascimento: _dataSelecionada!,
+  dataContratacao: DateTime.now(),
+);
   }
 
   @override
@@ -125,7 +126,7 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                     ),
                     RaisedButton(
                       onPressed: () {
-                        providerFuncionarios.put(funcionario);
+                        providerFuncionarios.put(funcionario!);
                       },
                       child: const Text('Salvar'),
                     ),
