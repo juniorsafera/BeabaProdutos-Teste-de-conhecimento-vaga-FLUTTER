@@ -16,14 +16,27 @@ class FormFuncionario extends StatefulWidget {
 }
 
 DateTime? _dataSelecionada;
-bool _demotido = true;
-String? id;
-
 final TextEditingController cNome = TextEditingController();
 final TextEditingController cCargo = TextEditingController();
 final TextEditingController cSetor = TextEditingController();
 
-  ModelFuncionario? funcionario = null ;
+bool _demotido = true;
+String? id;
+String? nome;
+
+final Map<String, String> _dadosForm = {};
+
+ModelFuncionario? funcionario = null;
+final _funcionario = ModelFuncionario(
+  id: id!,
+  nome: cNome.value.text,
+  cargo: cCargo.text,
+  setor: cSetor.text,
+  dataNascimento: _dataSelecionada!,
+  dataContratacao: DateTime.now(),
+);
+
+
 
 class _FormFuncionarioState extends State<FormFuncionario> {
   @override
@@ -33,25 +46,46 @@ class _FormFuncionarioState extends State<FormFuncionario> {
     _demotido = widget.funcionario.demitido;
     _dataSelecionada = widget.funcionario.dataNascimento;
     id = widget.funcionario.id;
+    nome = widget.funcionario.nome;
+    funcionario = widget.funcionario;
     cNome.text = widget.funcionario.nome;
+
     cCargo.text = widget.funcionario.cargo;
     cSetor.text = widget.funcionario.setor;
-    funcionario = ModelFuncionario(
-  id: id!,
-  nome: cNome.text,
-  cargo: cCargo.text,
-  setor: cSetor.text,
-  dataNascimento: _dataSelecionada!,
-  dataContratacao: DateTime.now(),
-);
   }
+
+ 
+
+  void alterarDados(ModelFuncionario funcionario) {
+    // ignore: unnecessary_null_comparison
+    if (funcionario != null) {
+      _dadosForm['id'] = funcionario.id;
+      _dadosForm['nome'] = funcionario.nome;
+      _dadosForm['cargo'] = funcionario.cargo;
+      _dadosForm['setor'] = funcionario.setor;
+    }
+  }
+
+  void limpar() {
+    cNome.clear();
+    cCargo.clear();
+    cSetor.clear();
+  }
+
+   
+
 
   @override
   Widget build(BuildContext context) {
     final providerFuncionarios = Provider.of<FuncionariosProvider>(context);
+
+
+  
+
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.funcionario.nome),
+        title: Text('teste.toString()' + funcionario!.nome),
       ),
       body: Container(
         // ignore: prefer_const_literals_to_create_immutables
@@ -126,7 +160,13 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                     ),
                     RaisedButton(
                       onPressed: () {
-                        providerFuncionarios.put(funcionario!);
+                        providerFuncionarios.alterar(_funcionario);
+                         
+                        print(_funcionario.nome + " ID: " + _funcionario.id);
+                         
+                         
+                        limpar();
+                        Navigator.pop(context);
                       },
                       child: const Text('Salvar'),
                     ),
