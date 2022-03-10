@@ -120,6 +120,7 @@ class _FormCadastroState extends State<FormCadastro> {
                     // ignore: deprecated_member_use
                     RaisedButton(
                       onPressed: () {
+                        // VALIDAR CAMPOS PARA NAO RECEBER DADOS NULOS
                         if (cNome.text.isEmpty ||
                             cCargo.text.isEmpty ||
                             cSetor.text.isEmpty ||
@@ -129,7 +130,7 @@ class _FormCadastroState extends State<FormCadastro> {
                             builder: (BuildContext context) => AlertDialog(
                               title: const Text('Atenção'),
                               content: const Text(
-                                  'Preencha todos os datos corretamente!'),
+                                  'Preencha todos os dados corretamente!'),
                               actions: <Widget>[
                                 // ignore: deprecated_member_use
                                 FlatButton(
