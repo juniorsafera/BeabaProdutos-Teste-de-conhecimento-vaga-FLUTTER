@@ -33,6 +33,12 @@ final funcionario = ModelFuncionario(
   dataContratacao: DateTime.now(),
 );
 
+void limpar() {
+  cNome.clear();
+  cCargo.clear();
+  cSetor.clear();
+}
+
 class _FormCadastroState extends State<FormCadastro> {
   @override
   Widget build(BuildContext context) {
@@ -52,71 +58,6 @@ class _FormCadastroState extends State<FormCadastro> {
           _dataSelecionada = value;
         });
       });
-    }
-
-    void validarCampos() {
-      if (cNome.text.isEmpty) {
-        showDialog<void>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Atenção'),
-            content: const Text('Informe o nome do funcionário!'),
-            actions: <Widget>[
-              // ignore: deprecated_member_use
-              FlatButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
-      } else if (cCargo.text.isEmpty) {
-        showDialog<void>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Atenção'),
-            content: const Text('Informe o cargo do funcionário!'),
-            actions: <Widget>[
-              // ignore: deprecated_member_use
-              FlatButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
-      } else if (cSetor.text.isEmpty) {
-        showDialog<void>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Atenção'),
-            content: const Text('Informe o setor do funcionário!'),
-            actions: <Widget>[
-              // ignore: deprecated_member_use
-              FlatButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
-      } else if (_dataSelecionada == null) {
-        showDialog<void>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Atenção'),
-            content: const Text('Informe a data de Nascimento!'),
-          ),
-        );
-      } else {
-        providerFuncionarios.put(funcionario);
-      }
     }
 
     return Scaffold(
@@ -185,8 +126,16 @@ class _FormCadastroState extends State<FormCadastro> {
                     ),
                     RaisedButton(
                       onPressed: () {
-                        providerFuncionarios.put(funcionario);
-                        Navigator.pop(context);
+                        if (cNome.text.isEmpty ||
+                            cCargo.text.isEmpty ||
+                            cSetor.text.isEmpty ||
+                            _dataSelecionada == null) {
+                          print('Preencha todos os dados!');
+                        } else {
+                          providerFuncionarios.cadastrar(funcionario);
+                          limpar();
+                          Navigator.pop(context);
+                        }
                       },
                       child: Text('Cadastrar'),
                     ),
