@@ -104,10 +104,10 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                         onPressed: () {
                           _abrirCalendario();
                         },
-                        child: const Text('Data Nascimento: '),
+                        child: const Text('Selecionar data'),
                       ),
                       const SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
                       _dataSelecionada == null
                           ? const Text('')
