@@ -1,6 +1,4 @@
-import 'package:beaba_produtos_teste_conhecimento_flutter/components/form_cadastro.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/provider/provider_funcionarios.dart';
-import 'package:beaba_produtos_teste_conhecimento_flutter/routes/rotas.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/views/view_principal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,15 +8,15 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (_) => FuncionariosProvider(),
-      child:const MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: ViewPrincipal(),
-        localizationsDelegates:   [
+        localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales:   [Locale('pt')],
+        supportedLocales: [Locale('pt')],
       ),
     ),
   );
