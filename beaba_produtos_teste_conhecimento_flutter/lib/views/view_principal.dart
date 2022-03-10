@@ -20,23 +20,23 @@ class _ViewPrincipalState extends State<ViewPrincipal> {
         providerFuncionarios.funcionariosCadastrados;
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Funcionários'),
-          centerTitle: true,
-          actions: [
-            // BOTAO PARA CHAMAR A TELA DE CADASTRO
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FormCadastro()),
-                  );
-                },
-                icon: const Icon(Icons.add))
-          ],
-        ),
-        body:
+      appBar: AppBar(
+        title: const Text('Funcionários'),
+        centerTitle: true,
+        actions: [
+          // BOTAO PARA CHAMAR A TELA DE CADASTRO
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FormCadastro()),
+                );
+              },
+              icon: const Icon(Icons.add))
+        ],
+      ),
+      body: SafeArea(
+        child:
             // ABAIXO SE A LISTA DE FUNCIONARIOS ESTIVER VAZIA NOTIFICAR,
             // CASO CONTRARIO EXIBIR A LISTA DE FUNCIONARIOS
             listaFuncionarios.isEmpty
@@ -45,6 +45,8 @@ class _ViewPrincipalState extends State<ViewPrincipal> {
                   )
                 : ListaFuncionarios(
                     funcionarios: listaFuncionarios,
-                  ));
+                  ),
+      ),
+    );
   }
 }
