@@ -8,6 +8,7 @@ Map listaFuncionarios = {
     setor: 'Educção',
     dataNascimento: DateTime.now(),
     dataContratacao: DateTime.now(),
+     
   ),
   '2': ModelFuncionario(
     id: '2',
@@ -16,6 +17,7 @@ Map listaFuncionarios = {
     setor: 'Educção',
     dataNascimento: DateTime.now(),
     dataContratacao: DateTime.now(),
+     
   ),
   '3': ModelFuncionario(
     id: '3',
@@ -24,7 +26,6 @@ Map listaFuncionarios = {
     setor: 'Educção',
     dataNascimento: DateTime.now(),
     dataContratacao: DateTime.now(),
+     
   ),
 };
-
-
