@@ -16,14 +16,11 @@ class FormCadastro extends StatefulWidget {
   State<FormCadastro> createState() => _FormCadastroState();
 }
 
- 
-
 DateTime? _dataSelecionada;
 final TextEditingController cNome = TextEditingController();
 final TextEditingController cCargo = TextEditingController();
 final TextEditingController cSetor = TextEditingController();
 
- 
 // limpar campos ao cadastrar funcionário
 void limpar() {
   cNome.clear();
@@ -37,7 +34,7 @@ class _FormCadastroState extends State<FormCadastro> {
   Widget build(BuildContext context) {
     final providerFuncionarios = Provider.of<FuncionariosProvider>(context);
 
-  // chamar calendário para selecionar data nascimetno
+    // chamar calendário para selecionar data nascimetno
     _abrirCalendario() {
       showDatePicker(
         context: context,
@@ -59,10 +56,10 @@ class _FormCadastroState extends State<FormCadastro> {
         title: Text('Funcionário'),
         centerTitle: true,
       ),
-      body: Container(
-        // ignore: prefer_const_literals_to_create_immutables
-        padding: EdgeInsets.all(15),
-        child: Form(
+      body: SingleChildScrollView(
+        child: Container(
+          // ignore: prefer_const_literals_to_create_immutables
+          padding: EdgeInsets.all(15),
           child: Column(
             children: [
               TextFormField(
