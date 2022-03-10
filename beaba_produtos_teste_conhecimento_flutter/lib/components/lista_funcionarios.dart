@@ -20,6 +20,7 @@ class ListaFuncionarios extends StatelessWidget {
       itemBuilder: (context, index) {
         final _funcionario = funcionarios[index];
         return Card(
+          elevation: 6,
           child: ListTile(
               title: Text(
                 _funcionario.nome,
