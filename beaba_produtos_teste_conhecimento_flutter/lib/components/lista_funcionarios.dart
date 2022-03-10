@@ -1,8 +1,6 @@
-import 'package:beaba_produtos_teste_conhecimento_flutter/components/form_cadastro.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/components/form_funcionario.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/model/modelFuncionario.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/provider/provider_funcionarios.dart';
-import 'package:beaba_produtos_teste_conhecimento_flutter/routes/rotas.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +12,9 @@ class ListaFuncionarios extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // RECUPERAR DADOS POR PROVIDER
     final providerFuncionarios = Provider.of<FuncionariosProvider>(context);
+
     return ListView.builder(
       itemCount: funcionarios.length,
       itemBuilder: (context, index) {
