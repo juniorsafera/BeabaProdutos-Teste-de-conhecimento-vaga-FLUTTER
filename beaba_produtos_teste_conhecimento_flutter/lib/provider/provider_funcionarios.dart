@@ -18,7 +18,7 @@ class FuncionariosProvider with ChangeNotifier {
   }
 
   void cadastrar(ModelFuncionario funcionario) {
-    // adicionar
+    // ADICIONAR UM NOVO FUNCIONARIO NO BANCO
     final id = Random().nextDouble().toString();
     _funcionarios.putIfAbsent(
       id,
@@ -37,6 +37,7 @@ class FuncionariosProvider with ChangeNotifier {
   }
 
   void remover(ModelFuncionario funcionario) {
+    // REMOVER FUNCIONARIO DO BANCO
     if (funcionario != null && funcionario.id != null) {
       _funcionarios.remove(funcionario.id);
       notifyListeners();
@@ -44,7 +45,7 @@ class FuncionariosProvider with ChangeNotifier {
   }
 
   void alterar(ModelFuncionario funcionario) {
-    // map1.update('key3', (value) => 'Transparent');
+    // ATERAR DADOS DE FUNCIONARIO
     _funcionarios.update(
       funcionario.id,
       (_) => ModelFuncionario(
