@@ -21,17 +21,35 @@ class ListaFuncionarios extends StatelessWidget {
         final _funcionario = funcionarios[index];
         return Card(
           child: ListTile(
-              title: Text(_funcionario.nome),
+              title: Text(
+                _funcionario.nome,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Contratado: ${_funcionario.dataContratacao}'),
-                  Text('Cargo: ${_funcionario.cargo}'),
-                  Text('Setor: ${_funcionario.setor}'),
-                  Text('Nascimento: ${DateFormat('dd/MM/y').format(_funcionario.dataNascimento)}'),
-                  _funcionario.dataDemissao == null
+                  Text(
+                    'Contratado: ${DateFormat('dd/MM/y').format(_funcionario.dataContratacao)}',
+                    style: const TextStyle(color: Colors.green),
+                  ),
+                  Text(
+                    'Cargo: ${_funcionario.cargo}',
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  Text(
+                    'Setor: ${_funcionario.setor}',
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  Text(
+                    'Nascimento: ${DateFormat('dd/MM/y').format(_funcionario.dataNascimento)}',
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  _funcionario.demitido == false
                       ? const Text('')
-                      : Text('Demitido: ${_funcionario.dataDemissao}'),
+                      : Text(
+                          'Demitido: ${DateFormat('dd/MM/y').format(_funcionario.dataDemissao!)}',
+                          style: const TextStyle(color: Colors.red),
+                        ),
                 ],
               ),
               trailing: SizedBox(
@@ -49,7 +67,10 @@ class ListaFuncionarios extends StatelessWidget {
                                   )),
                         );
                       },
-                      icon: const Icon(Icons.edit),
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.black,
+                      ),
                     ),
                     IconButton(
                       onPressed: () => showDialog<String>(
@@ -71,7 +92,10 @@ class ListaFuncionarios extends StatelessWidget {
                           ],
                         ),
                       ),
-                      icon: const Icon(Icons.delete),
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
                     ),
                   ],
                 ),
