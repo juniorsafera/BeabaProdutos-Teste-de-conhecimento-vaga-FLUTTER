@@ -8,6 +8,7 @@ class ModelFuncionario {
   final DateTime dataNascimento;
   final DateTime dataContratacao;
   bool demitido;
+
   DateTime? dataDemissao;
 
   ModelFuncionario({
