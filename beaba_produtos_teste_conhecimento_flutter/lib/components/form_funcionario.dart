@@ -150,9 +150,32 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                       // ignore: deprecated_member_use
                       RaisedButton(
                         onPressed: () {
-                          // SALVAR DADOS ALTERADOS DE FUNCIONÁRIO
-                          providerFuncionarios.alterar(
-                            ModelFuncionario(
+                          // VALIDAR CAMPOS PARA NAO RECEBER DADOS NULOS
+                          if (cNome.text.isEmpty ||
+                              cCargo.text.isEmpty ||
+                              cSetor.text.isEmpty ||
+                              _dataSelecionada == null) {
+                            showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Atenção'),
+                                content: const Text(
+                                    'Preencha todos os dados corretamente!'),
+                                actions: <Widget>[
+                                  // ignore: deprecated_member_use
+                                  FlatButton(
+                                    child: const Text('Ok'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            // SALVAR DADOS ALTERADOS DE FUNCIONÁRIO
+                            providerFuncionarios.alterar(
+                              ModelFuncionario(
                                 id: id!,
                                 nome: cNome.text,
                                 cargo: cCargo.text,
@@ -161,12 +184,14 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                                 dataContratacao:
                                     widget.funcionario.dataContratacao,
                                 demitido: _demitido!,
-                                dataDemissao: DateTime.now()),
-                          );
+                                dataDemissao: dataHoje,
+                              ),
+                            );
 
-                          // LIMPAR E FECHAR TELA AO SALVAR
-                          limpar();
-                          Navigator.pop(context);
+                            // LIMPAR E FECHAR TELA AO SALVAR
+                            limpar();
+                            Navigator.pop(context);
+                          }
                         },
                         child: const Text('Salvar'),
                       ),
