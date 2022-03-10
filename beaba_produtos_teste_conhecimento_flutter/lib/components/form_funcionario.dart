@@ -20,7 +20,8 @@ final TextEditingController cNome = TextEditingController();
 final TextEditingController cCargo = TextEditingController();
 final TextEditingController cSetor = TextEditingController();
 
-bool _demotido = true;
+bool? _demitido;
+DateTime? dataHoje;
 String? id;
 String? nome;
 
@@ -34,16 +35,15 @@ final _funcionario = ModelFuncionario(
   setor: cSetor.text,
   dataNascimento: _dataSelecionada!,
   dataContratacao: DateTime.now(),
+  demitido: false,
 );
-
-
 
 class _FormFuncionarioState extends State<FormFuncionario> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _demotido = widget.funcionario.demitido;
+
     _dataSelecionada = widget.funcionario.dataNascimento;
     id = widget.funcionario.id;
     nome = widget.funcionario.nome;
@@ -52,9 +52,8 @@ class _FormFuncionarioState extends State<FormFuncionario> {
 
     cCargo.text = widget.funcionario.cargo;
     cSetor.text = widget.funcionario.setor;
+    _demitido = widget.funcionario.demitido;
   }
-
- 
 
   void alterarDados(ModelFuncionario funcionario) {
     // ignore: unnecessary_null_comparison
@@ -72,16 +71,9 @@ class _FormFuncionarioState extends State<FormFuncionario> {
     cSetor.clear();
   }
 
-   
-
-
   @override
   Widget build(BuildContext context) {
     final providerFuncionarios = Provider.of<FuncionariosProvider>(context);
-
-
-  
-
 
     return Scaffold(
       appBar: AppBar(
@@ -134,12 +126,15 @@ class _FormFuncionarioState extends State<FormFuncionario> {
               ),
               Row(
                 children: [
-                  const Text('Demitir'),
+                  const Text('Demitido'),
                   Switch(
-                      value: _demotido,
+                      value: _demitido!,
                       onChanged: (bool v) {
                         setState(() {
-                          _demotido = v;
+                          _demitido = v;
+                          if (v == true) {
+                            dataHoje = DateTime.now();
+                          }
                         });
                       }),
                 ],
@@ -160,11 +155,21 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                     ),
                     RaisedButton(
                       onPressed: () {
-                        providerFuncionarios.alterar(_funcionario);
-                         
-                        print(_funcionario.nome + " ID: " + _funcionario.id);
-                         
-                         
+                        providerFuncionarios.alterar(
+                          ModelFuncionario(
+                              id: id!,
+                              nome: cNome.text,
+                              cargo: cCargo.text,
+                              setor: cSetor.text,
+                              dataNascimento: widget.funcionario.dataNascimento,
+                              dataContratacao:
+                                  widget.funcionario.dataContratacao,
+                              demitido: _demitido!,
+                              dataDemissao: DateTime.now()),
+                        );
+
+                        print(widget.funcionario.demitido);
+
                         limpar();
                         Navigator.pop(context);
                       },
