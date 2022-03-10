@@ -89,10 +89,10 @@ class _FormCadastroState extends State<FormCadastro> {
                       onPressed: () {
                         _abrirCalendario();
                       },
-                      child: Text('Data Nascimento: '),
+                      child: Text('Selecionar data'),
                     ),
                     SizedBox(
-                      width: 10,
+                      width: 5,
                     ),
                     _dataSelecionada == null
                         ? Text('')
