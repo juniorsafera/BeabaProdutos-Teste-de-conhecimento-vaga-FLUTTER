@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:math';
-
 import 'package:beaba_produtos_teste_conhecimento_flutter/model/modelFuncionario.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/provider/provider_funcionarios.dart';
 import 'package:flutter/material.dart';
@@ -17,26 +16,20 @@ class FormCadastro extends StatefulWidget {
   State<FormCadastro> createState() => _FormCadastroState();
 }
 
-final _form = GlobalKey<FormState>();
+ 
 
 DateTime? _dataSelecionada;
 final TextEditingController cNome = TextEditingController();
 final TextEditingController cCargo = TextEditingController();
 final TextEditingController cSetor = TextEditingController();
 
-final funcionario = ModelFuncionario(
-  id: Random.secure().toString(),
-  nome: cNome.text,
-  cargo: cCargo.text,
-  setor: cSetor.text,
-  dataNascimento: _dataSelecionada!,
-  dataContratacao: DateTime.now(),
-);
-
+ 
+// limpar campos ao cadastrar funcionário
 void limpar() {
   cNome.clear();
   cCargo.clear();
   cSetor.clear();
+  _dataSelecionada = null;
 }
 
 class _FormCadastroState extends State<FormCadastro> {
@@ -44,6 +37,7 @@ class _FormCadastroState extends State<FormCadastro> {
   Widget build(BuildContext context) {
     final providerFuncionarios = Provider.of<FuncionariosProvider>(context);
 
+  // chamar calendário para selecionar data nascimetno
     _abrirCalendario() {
       showDatePicker(
         context: context,
@@ -93,6 +87,7 @@ class _FormCadastroState extends State<FormCadastro> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
+                    // ignore: deprecated_member_use
                     FlatButton(
                       onPressed: () {
                         _abrirCalendario();
@@ -115,6 +110,7 @@ class _FormCadastroState extends State<FormCadastro> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    // ignore: deprecated_member_use
                     RaisedButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -124,15 +120,39 @@ class _FormCadastroState extends State<FormCadastro> {
                     SizedBox(
                       width: 10,
                     ),
+                    // ignore: deprecated_member_use
                     RaisedButton(
                       onPressed: () {
                         if (cNome.text.isEmpty ||
                             cCargo.text.isEmpty ||
                             cSetor.text.isEmpty ||
                             _dataSelecionada == null) {
-                          print('Preencha todos os dados!');
+                          showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Atenção'),
+                              content: const Text(
+                                  'Preencha todos os datos corretamente!'),
+                              actions: <Widget>[
+                                // ignore: deprecated_member_use
+                                FlatButton(
+                                  child: const Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
                         } else {
-                          providerFuncionarios.cadastrar(funcionario);
+                          providerFuncionarios.cadastrar(ModelFuncionario(
+                            id: Random.secure().toString(),
+                            nome: cNome.text,
+                            cargo: cCargo.text,
+                            setor: cSetor.text,
+                            dataNascimento: _dataSelecionada!,
+                            dataContratacao: DateTime.now(),
+                          ));
                           limpar();
                           Navigator.pop(context);
                         }
