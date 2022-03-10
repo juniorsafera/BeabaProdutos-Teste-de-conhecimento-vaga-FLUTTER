@@ -1,4 +1,3 @@
-
 Map listaFuncionarios = {
   //   DADOS USADOS COMO BASE NA CONSTRUÇÃO DO APP
 
