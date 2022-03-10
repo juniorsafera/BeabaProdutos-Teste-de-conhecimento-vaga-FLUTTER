@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:beaba_produtos_teste_conhecimento_flutter/model/modelFuncionario.dart';
 import 'package:beaba_produtos_teste_conhecimento_flutter/provider/provider_funcionarios.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +13,9 @@ class FormFuncionario extends StatefulWidget {
   State<FormFuncionario> createState() => _FormFuncionarioState();
 }
 
+// VARIAVEL PARA MANIPULAR VALOR DE CALENDARIO
 DateTime? _dataSelecionada;
+// CONTROLLERS PARA MANIPULAR VALORES DE TEXTFIELDS
 final TextEditingController cNome = TextEditingController();
 final TextEditingController cCargo = TextEditingController();
 final TextEditingController cSetor = TextEditingController();
@@ -25,59 +25,53 @@ DateTime? dataHoje;
 String? id;
 String? nome;
 
-final Map<String, String> _dadosForm = {};
-
-ModelFuncionario? funcionario = null;
-final _funcionario = ModelFuncionario(
-  id: id!,
-  nome: cNome.value.text,
-  cargo: cCargo.text,
-  setor: cSetor.text,
-  dataNascimento: _dataSelecionada!,
-  dataContratacao: DateTime.now(),
-  demitido: false,
-);
-
 class _FormFuncionarioState extends State<FormFuncionario> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
+    // INICIALIZANDO CAMPOS PARA MANIPULAÇÃO DE DADOS
     _dataSelecionada = widget.funcionario.dataNascimento;
     id = widget.funcionario.id;
     nome = widget.funcionario.nome;
-    funcionario = widget.funcionario;
     cNome.text = widget.funcionario.nome;
-
     cCargo.text = widget.funcionario.cargo;
     cSetor.text = widget.funcionario.setor;
     _demitido = widget.funcionario.demitido;
   }
 
-  void alterarDados(ModelFuncionario funcionario) {
-    // ignore: unnecessary_null_comparison
-    if (funcionario != null) {
-      _dadosForm['id'] = funcionario.id;
-      _dadosForm['nome'] = funcionario.nome;
-      _dadosForm['cargo'] = funcionario.cargo;
-      _dadosForm['setor'] = funcionario.setor;
-    }
-  }
-
+  // limpar campos
   void limpar() {
     cNome.clear();
     cCargo.clear();
     cSetor.clear();
+    _dataSelecionada = null;
   }
 
   @override
   Widget build(BuildContext context) {
+    // RECUPERAR DADOS POR PROVIDER
     final providerFuncionarios = Provider.of<FuncionariosProvider>(context);
+
+    //  CHAMAR CALENDÁRIO PARA SELECIONAR DATA NASCIMENTO
+    _abrirCalendario() {
+      showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1970),
+        lastDate: DateTime.now(),
+      ).then((value) {
+        if (value == null) {
+          return;
+        }
+        setState(() {
+          _dataSelecionada = value;
+        });
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('teste.toString()' + funcionario!.nome),
+        title: const Text('Dados o funcionário'),
       ),
       body: Container(
         // ignore: prefer_const_literals_to_create_immutables
@@ -87,19 +81,16 @@ class _FormFuncionarioState extends State<FormFuncionario> {
             children: [
               TextFormField(
                 controller: cNome,
-                //initialValue: widget.funcionario.nome,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(labelText: 'Nome Completo'),
               ),
               TextFormField(
                 controller: cCargo,
-                //initialValue: widget.funcionario.cargo,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(labelText: 'Cargo'),
               ),
               TextFormField(
                 controller: cSetor,
-                //initialValue: widget.funcionario.setor,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(labelText: 'Setor'),
               ),
@@ -107,9 +98,10 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
+                    // ignore: deprecated_member_use
                     FlatButton(
                       onPressed: () {
-                        //   _abrirCalendario();
+                        _abrirCalendario();
                       },
                       child: const Text('Data Nascimento: '),
                     ),
@@ -144,6 +136,7 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    // ignore: deprecated_member_use
                     RaisedButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -153,23 +146,24 @@ class _FormFuncionarioState extends State<FormFuncionario> {
                     const SizedBox(
                       width: 10,
                     ),
+                    // ignore: deprecated_member_use
                     RaisedButton(
                       onPressed: () {
+                        // SALVAR DADOS ALTERADOS DE FUNCIONÁRIO
                         providerFuncionarios.alterar(
                           ModelFuncionario(
                               id: id!,
                               nome: cNome.text,
                               cargo: cCargo.text,
                               setor: cSetor.text,
-                              dataNascimento: widget.funcionario.dataNascimento,
+                              dataNascimento: _dataSelecionada!,
                               dataContratacao:
                                   widget.funcionario.dataContratacao,
                               demitido: _demitido!,
                               dataDemissao: DateTime.now()),
                         );
 
-                        print(widget.funcionario.demitido);
-
+                        // LIMPAR E FECHAR TELA AO SALVAR
                         limpar();
                         Navigator.pop(context);
                       },
