@@ -73,106 +73,108 @@ class _FormFuncionarioState extends State<FormFuncionario> {
       appBar: AppBar(
         title: const Text('Dados o funcionário'),
       ),
-      body: Container(
-        // ignore: prefer_const_literals_to_create_immutables
-        padding: const EdgeInsets.all(15),
-        child: Form(
-          child: Column(
-            children: [
-              TextFormField(
-                controller: cNome,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(labelText: 'Nome Completo'),
-              ),
-              TextFormField(
-                controller: cCargo,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(labelText: 'Cargo'),
-              ),
-              TextFormField(
-                controller: cSetor,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(labelText: 'Setor'),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
+      body: SingleChildScrollView(
+        child: Container(
+          // ignore: prefer_const_literals_to_create_immutables
+          padding: const EdgeInsets.all(15),
+          child: Form(
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: cNome,
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(labelText: 'Nome Completo'),
+                ),
+                TextFormField(
+                  controller: cCargo,
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(labelText: 'Cargo'),
+                ),
+                TextFormField(
+                  controller: cSetor,
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(labelText: 'Setor'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      // ignore: deprecated_member_use
+                      FlatButton(
+                        onPressed: () {
+                          _abrirCalendario();
+                        },
+                        child: const Text('Data Nascimento: '),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      _dataSelecionada == null
+                          ? const Text('')
+                          : Text(
+                              DateFormat('dd/MM/y').format(_dataSelecionada!),
+                            ),
+                    ],
+                  ),
+                ),
+                Row(
                   children: [
-                    // ignore: deprecated_member_use
-                    FlatButton(
-                      onPressed: () {
-                        _abrirCalendario();
-                      },
-                      child: const Text('Data Nascimento: '),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    _dataSelecionada == null
-                        ? const Text('')
-                        : Text(
-                            DateFormat('dd/MM/y').format(_dataSelecionada!),
-                          ),
+                    const Text('Demitido'),
+                    Switch(
+                        value: _demitido!,
+                        onChanged: (bool v) {
+                          setState(() {
+                            _demitido = v;
+                            if (v == true) {
+                              dataHoje = DateTime.now();
+                            }
+                          });
+                        }),
                   ],
                 ),
-              ),
-              Row(
-                children: [
-                  const Text('Demitido'),
-                  Switch(
-                      value: _demitido!,
-                      onChanged: (bool v) {
-                        setState(() {
-                          _demitido = v;
-                          if (v == true) {
-                            dataHoje = DateTime.now();
-                          }
-                        });
-                      }),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    // ignore: deprecated_member_use
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Cancelar'),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    // ignore: deprecated_member_use
-                    RaisedButton(
-                      onPressed: () {
-                        // SALVAR DADOS ALTERADOS DE FUNCIONÁRIO
-                        providerFuncionarios.alterar(
-                          ModelFuncionario(
-                              id: id!,
-                              nome: cNome.text,
-                              cargo: cCargo.text,
-                              setor: cSetor.text,
-                              dataNascimento: _dataSelecionada!,
-                              dataContratacao:
-                                  widget.funcionario.dataContratacao,
-                              demitido: _demitido!,
-                              dataDemissao: DateTime.now()),
-                        );
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // ignore: deprecated_member_use
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancelar'),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      // ignore: deprecated_member_use
+                      RaisedButton(
+                        onPressed: () {
+                          // SALVAR DADOS ALTERADOS DE FUNCIONÁRIO
+                          providerFuncionarios.alterar(
+                            ModelFuncionario(
+                                id: id!,
+                                nome: cNome.text,
+                                cargo: cCargo.text,
+                                setor: cSetor.text,
+                                dataNascimento: _dataSelecionada!,
+                                dataContratacao:
+                                    widget.funcionario.dataContratacao,
+                                demitido: _demitido!,
+                                dataDemissao: DateTime.now()),
+                          );
 
-                        // LIMPAR E FECHAR TELA AO SALVAR
-                        limpar();
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Salvar'),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                          // LIMPAR E FECHAR TELA AO SALVAR
+                          limpar();
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Salvar'),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
